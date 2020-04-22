@@ -1,11 +1,21 @@
-PKG_VERSION:=2.02
+#
+# Copyright (C) 2006-2015 OpenWrt.org
+#
+# This is free software, licensed under the GNU General Public License v2.
+# See /LICENSE for more information.
+#
+
+include $(TOPDIR)/rules.mk
+include $(INCLUDE_DIR)/kernel.mk
+
+PKG_CPE_ID:=cpe:/a:gnu:grub2
+PKG_VERSION:=2.04
 PKG_RELEASE:=1
 
 PKG_SOURCE:=grub-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=@GNU/grub
-PKG_HASH:=810b3798d316394f94096ec2797909dbf23c858e48f7b3830826b8daa06b7b0f
+PKG_HASH:=e5292496995ad42dabe843a0192cf2a2c502e7ffcc7479398232b10a472df77d
 
-PKG_FIXUP:=autoreconf
 HOST_BUILD_PARALLEL:=1
 
 PKG_SSP:=0
@@ -14,6 +24,7 @@ PKG_FLAGS:=nonshared
 
 PATCH_DIR := ../patches
 HOST_PATCH_DIR := ../patches
+HOST_BUILD_DIR := $(BUILD_DIR_HOST)/$(PKG_NAME)-$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/host-build.mk
 include $(INCLUDE_DIR)/package.mk
@@ -37,7 +48,8 @@ CONFIGURE_ARGS += \
 	--disable-nls \
 	--disable-device-mapper \
 	--disable-libzfs \
-	--disable-grub-mkfont
+	--disable-grub-mkfont \
+	--with-platform=none
 
 HOST_CONFIGURE_VARS += \
 	grub_build_mkfont_excuse="don't want fonts"
